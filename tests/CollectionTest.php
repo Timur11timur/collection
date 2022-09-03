@@ -3,6 +3,7 @@
 namespace Tests;
 
 use App\Collection;
+use IteratorAggregate;
 use PHPUnit\Framework\TestCase;
 
 class CollectionTest extends TestCase
@@ -47,5 +48,19 @@ class CollectionTest extends TestCase
         $this->assertTrue(isset($collection[4]));
         unset($collection[4]);
         $this->assertFalse(isset($collection[4]));
+    }
+
+    /** @test */
+    public function it_can_be_iterated()
+    {
+        $items = ['one', 'two', 'three'];
+
+        $collection = Collection::make($items);
+
+        $this->assertInstanceOf(IteratorAggregate::class, $collection);
+
+        foreach ($collection as $index => $item) {
+            $this->assertEquals($items[$index], $item);
+        }
     }
 }

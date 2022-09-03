@@ -3,9 +3,12 @@
 namespace App;
 
 use ArrayAccess;
+use ArrayIterator;
 use Countable;
+use IteratorAggregate;
+use Traversable;
 
-class Collection implements Countable, ArrayAccess
+class Collection implements Countable, ArrayAccess, IteratorAggregate
 {
     private array $items;
 
@@ -46,5 +49,10 @@ class Collection implements Countable, ArrayAccess
     public function offsetUnset(mixed $offset): void
     {
         unset($this->items[$offset]);
+    }
+
+    public function getIterator(): Traversable
+    {
+        return new ArrayIterator($this->items);
     }
 }
