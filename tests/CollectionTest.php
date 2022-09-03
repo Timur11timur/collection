@@ -23,4 +23,29 @@ class CollectionTest extends TestCase
 
         $this->assertCount(3, Collection::make($items));
     }
+
+    /** @test */
+    public function it_mimics_an_array()
+    {
+        $items = ['one', 'two', 'three'];
+
+        $collection = Collection::make($items);
+
+        $this->assertEquals('one', $collection[0]);
+        $this->assertEquals('two', $collection[1]);
+        $this->assertEquals('three', $collection[2]);
+
+        $collection[3] = 'four';
+        $this->assertEquals('four', $collection[3]);
+
+        $collection[] = 'five';
+        $this->assertEquals('five', $collection[4]);
+
+        $collection[4] = 'six';
+        $this->assertEquals('six', $collection[4]);
+
+        $this->assertTrue(isset($collection[4]));
+        unset($collection[4]);
+        $this->assertFalse(isset($collection[4]));
+    }
 }
